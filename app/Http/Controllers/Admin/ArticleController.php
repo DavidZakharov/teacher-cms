@@ -1,11 +1,9 @@
 <?php
-
-namespace App\Http\Controllers\admin;
-
+namespace App\Http\Controllers\Admin;
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 class ArticleController extends Controller
 {
     /**
@@ -15,12 +13,10 @@ class ArticleController extends Controller
      */
     public function index()
     {
-      return view('admin.articles.index', [
-        'articles' => Article::orderBy('created_at', 'desc')->paginate(10)
-      ]);
-
+        return view('admin.articles.index', [
+          'articles' => Article::orderBy('created_at', 'desc')->paginate(10)
+        ]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -28,9 +24,12 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.articles.create', [
+           'article'    => [],
+           'categories' => Category::with('children')->where('parent_id', 0)->get(),
+           'delimiter'  => ''
+         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -39,9 +38,13 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = Article::create($request->all());
+        // Categories
+        if ($request->input('categories')) {
+            $article->categories()->attach($request->input('categories'));
+        }
+        return redirect()->route('admin.article.index');
     }
-
     /**
      * Display the specified resource.
      *
@@ -52,7 +55,6 @@ class ArticleController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -63,7 +65,6 @@ class ArticleController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -75,7 +76,6 @@ class ArticleController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *

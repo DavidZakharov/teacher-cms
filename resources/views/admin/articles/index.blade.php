@@ -60,8 +60,6 @@
   </tfoot>
 </table>
 
-//список категорий
-
 </div>
 
 @endsection
