@@ -12,16 +12,19 @@
     <meta name="keywords" content="@yield('meta_keyword')">
     <meta name="description" content="@yield('meta_description')">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         @include('layouts.header')
+        <div class="container">
+          <div class="row">
 
-        @yield('content')
+            @yield('content')
+
+          </div>
+        </div>
     </div>
 
     <!-- Scripts -->
