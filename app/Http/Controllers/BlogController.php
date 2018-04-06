@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
+use App\Page;
 use Illuminate\Http\Request;
 class BlogController extends Controller
 {
@@ -26,6 +27,12 @@ class BlogController extends Controller
         return view('blog.search', [
           'search' => $search,
           'articles' => $article
+        ]);
+    }
+    public function page($slug)
+    {
+        return view('blog.page', [
+          'page' => Page::where('slug', $slug)->first()
         ]);
     }
 }
